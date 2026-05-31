@@ -1,8 +1,8 @@
-const PP_VERSION = "2.0.0";
+const PP_VERSION = "3.0.0";
 const PP_BASE_PATH = window.PP_BASE_PATH || "";
 
 function withBase(path) {
-  if (/^(https?:)?\/\//.test(path)) return path;
+  if (!path || /^(https?:)?\/\//.test(path) || path.startsWith("mailto:") || path.startsWith("tel:") || path.startsWith("#")) return path;
   return `${PP_BASE_PATH}${path}`.replace(/\/\.\//g, "/");
 }
 
@@ -15,6 +15,7 @@ async function includeHTML(targetId, filePath) {
     if (!response.ok) throw new Error(`Could not load ${filePath}`);
     target.innerHTML = await response.text();
     fixRootLinks(target);
+    fixRootActions(target);
   } catch (error) {
     target.innerHTML = `<div class="include-error">Failed to load ${filePath}</div>`;
     console.error(error);
@@ -29,11 +30,18 @@ function fixRootLinks(scope = document) {
   });
 }
 
+function fixRootActions(scope = document) {
+  scope.querySelectorAll("[data-root-action]").forEach((form) => {
+    const action = form.getAttribute("action");
+    if (action) form.setAttribute("action", withBase(action));
+  });
+}
+
 function setActiveNav() {
   const current = location.pathname.split("/").pop() || "index.html";
   document.querySelectorAll(".site-nav a").forEach((link) => {
-    const name = link.getAttribute("href").split("/").pop();
-    if (name === current) link.classList.add("active");
+    const clean = (link.getAttribute("href") || "").split("#")[0].split("?")[0].split("/").pop();
+    if (clean === current) link.classList.add("active");
   });
 }
 
@@ -59,6 +67,7 @@ async function loadLayout() {
   setupFooterYear();
   setupNavToggle();
   setActiveNav();
+  document.dispatchEvent(new CustomEvent("pp:includes-ready"));
 }
 
 document.addEventListener("DOMContentLoaded", loadLayout);

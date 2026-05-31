@@ -1,90 +1,64 @@
 # Programmers Picnic GitHub Pages Full Template
 
-This is a static GitHub Pages-ready website template.
+This static template is ready for GitHub Pages.
 
-## Main idea
+## Main features
 
-The website uses three reusable systems:
+- `partials/header.html` loaded by JavaScript
+- `partials/footer.html` loaded by JavaScript
+- `assets/js/layouts.js` generates different page layouts
+- Two-level dropdown navigation
+- Navigation search box
+- Dark/light theme selector in the header
+- Footer chatbot demo
+- WhatsApp link: `https://wa.me/919335874326`
+- Carousel page
+- Open map page
+- Picture gallery and video gallery
+- Shopping cart and checkout demo using `localStorage`
+- Subfolder support using `window.PP_BASE_PATH`
 
-1. `partials/header.html` for the common header.
-2. `partials/footer.html` for the common footer.
-3. `assets/js/layouts.js` for generating different page layouts from one central JavaScript file.
-
-No backend and no build step are required.
-
-## Pages included
-
-- `index.html`
-- `about.html`
-- `gallery.html`
-- `contact.html`
-- `cotact.html` redirects to `contact.html`
-- `video-gallery.html`
-- `picture-gallery.html`
-- `pages/sample/index.html`
-
-## Organized folders
+## Important files
 
 ```text
-partials/
-  header.html
-  footer.html
-
-assets/
-  css/style.css
-  js/include.js
-  js/layouts.js
-  js/main.js
-  images/slides/
-  images/gallery/
-  images/og/
-  videos/
+partials/header.html
+partials/footer.html
+assets/css/style.css
+assets/js/include.js
+assets/js/layouts.js
+assets/js/main.js
 ```
 
-## How the layout system works
-
-Each page has a small `<main>` tag:
-
-```html
-<main id="main-content" class="container" data-layout="home"></main>
-```
-
-The value of `data-layout` selects an object from `assets/js/layouts.js`:
-
-```js
-window.PP_LAYOUTS = {
-  home: {
-    title: "Home Page Title",
-    sections: [
-      { type: "pageHero", title: "Hello" }
-    ]
-  }
-};
-```
-
-To make a new page:
-
-1. Copy any existing page.
-2. Change `data-layout="home"` to a new layout name, for example `data-layout="courses"`.
-3. Add a `courses` object inside `assets/js/layouts.js`.
-
-## Subfolder pages
-
-For pages inside folders, set `PP_BASE_PATH` before loading scripts:
-
-```html
-<script>window.PP_BASE_PATH = "../../";</script>
-<script src="../../assets/js/include.js"></script>
-<script src="../../assets/js/layouts.js"></script>
-<script src="../../assets/js/main.js"></script>
-```
-
-The included sample is here:
+## Pages
 
 ```text
+index.html
+about.html
+gallery.html
+picture-gallery.html
+video-gallery.html
+carousel.html
+openmap.html
+contact.html
+cotact.html
+shopping-cart.html
+checkout.html
 pages/sample/index.html
 ```
 
+## How to add a page
+
+1. Copy any root HTML page.
+2. Change `data-layout="home"` to your new layout name.
+3. Add that layout in `assets/js/layouts.js`.
+4. Add a navigation link in `partials/header.html` if needed.
+
 ## GitHub Pages
 
-Upload the whole folder to your repository and enable GitHub Pages from repository settings.
+Upload these files to a GitHub repository and enable GitHub Pages from the repository settings.
+
+
+## Latest update
+
+- Dropdown navigation has been stabilized with a hover bridge, delayed closing, keyboard focus support, and Escape-to-close behavior.
+- Footer now includes social media links. Replace the `#` placeholders for Facebook, Instagram, and LinkedIn with your real URLs.

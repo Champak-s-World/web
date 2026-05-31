@@ -9,17 +9,55 @@
       </span>
     </a>
 
-    <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
+    <div class="header-tools">
+      <form class="nav-search" role="search" action="gallery.html" data-root-action>
+        <label class="sr-only" for="pp-site-search">Search this site</label>
+        <input id="pp-site-search" name="q" type="search" placeholder="Search pages..." autocomplete="off">
+        <button type="submit" aria-label="Search">⌕</button>
+        <div class="search-results" id="pp-search-results" aria-live="polite"></div>
+      </form>
+
+      <button class="theme-toggle" type="button" aria-label="Switch dark or light theme" title="Dark / Light">☀️</button>
+
+      <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
 
     <nav class="site-nav" aria-label="Main navigation">
-      <a href="index.html" data-root-link>Home</a>
-      <a href="about.html" data-root-link>About</a>
-      <a href="gallery.html" data-root-link>Gallery</a>
-      <a href="picture-gallery.html" data-root-link>Pictures</a>
-      <a href="video-gallery.html" data-root-link>Videos</a>
-      <a href="contact.html" data-root-link>Contact</a>
+      <ul class="nav-menu">
+        <li><a href="index.html" data-root-link>Home</a></li>
+        <li class="has-dropdown">
+          <a href="about.html" data-root-link>About</a>
+          <ul class="dropdown-menu">
+            <li><a href="about.html#story" data-root-link>Our Story</a></li>
+            <li><a href="about.html#method" data-root-link>Teaching Method</a></li>
+          </ul>
+        </li>
+        <li class="has-dropdown">
+          <a href="gallery.html" data-root-link>Gallery</a>
+          <ul class="dropdown-menu">
+            <li><a href="picture-gallery.html" data-root-link>Picture Gallery</a></li>
+            <li><a href="video-gallery.html" data-root-link>Video Gallery</a></li>
+            <li><a href="carousel.html" data-root-link>Carousel Page</a></li>
+          </ul>
+        </li>
+        <li class="has-dropdown">
+          <a href="shopping-cart.html" data-root-link>Shop</a>
+          <ul class="dropdown-menu">
+            <li><a href="shopping-cart.html" data-root-link>Shopping Cart</a></li>
+            <li><a href="checkout.html" data-root-link>Checkout</a></li>
+          </ul>
+        </li>
+        <li class="has-dropdown">
+          <a href="contact.html" data-root-link>Contact</a>
+          <ul class="dropdown-menu">
+            <li><a href="contact.html" data-root-link>Contact Form</a></li>
+            <li><a href="openmap.html" data-root-link>Open Map</a></li>
+            <li><a href="https://wa.me/919335874326" target="_blank" rel="noopener">WhatsApp</a></li>
+          </ul>
+        </li>
+      </ul>
     </nav>
   </div>
 </header>
