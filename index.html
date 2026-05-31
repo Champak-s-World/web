@@ -1,66 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Programmers Picnic Template</title>
-
-  <meta name="description" content="GitHub Pages ready reusable HTML template with header and footer loaded using JavaScript." />
-  <meta name="keywords" content="HTML template, JavaScript include, GitHub Pages, header footer, Programmers Picnic" />
-  <meta name="author" content="Programmers Picnic AI-ML Classes by Champak Roy" />
-
-  <meta property="og:title" content="Programmers Picnic Template" />
-  <meta property="og:description" content="Reusable GitHub Pages template with common header and footer." />
-  <meta property="og:type" content="website" />
-
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programmers Picnic | GitHub Pages Template</title>
+  <meta name="description" content="GitHub Pages website template using shared header.html and footer.html loaded with JavaScript, including slideshow and gallery pages.">
+  <meta property="og:title" content="Programmers Picnic GitHub Pages Template">
+  <meta property="og:description" content="A static website template with shared includes, galleries, videos and organized assets.">
+  <meta property="og:image" content="assets/images/og/og-home.svg">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494&host=ca-host-pub-1556223355139109" crossorigin="anonymous"></script>
 </head>
 <body>
-
   <div id="site-header"></div>
-
-  <main class="page-wrap">
+  <main id="main-content" class="container">
     <section class="hero">
-      <p class="eyebrow">GitHub Pages Template</p>
-      <h1>Reusable Header and Footer</h1>
-      <p>
-        This page loads <code>header.html</code> and <code>footer.html</code>
-        through <code>include.js</code>. Edit those two files once, and every page using
-        this layout will update.
-      </p>
-      <a class="btn" href="lessons/python/">Open subfolder example</a>
+      <div class="hero-card">
+        <p class="eyebrow">GitHub Pages Ready</p>
+        <h1>One header, one footer, many beautiful pages.</h1>
+        <p class="lead">This template keeps repeated layout in <strong>partials/header.html</strong> and <strong>partials/footer.html</strong>. Every page loads them through <strong>assets/js/include.js</strong>.</p>
+        <div class="actions">
+          <a class="btn primary" href="about.html">Explore Template</a>
+          <a class="btn secondary" href="gallery.html">View Gallery</a>
+        </div>
+      </div>
+      <div class="hero-slider" aria-label="Featured slideshow">
+        <article class="slide active">
+          <img src="assets/images/slides/slide-learning.svg" alt="Learning slideshow graphic">
+          <div class="slide-caption"><strong>Learn with Joy</strong><br>Build lessons, landing pages and course websites.</div>
+        </article>
+        <article class="slide">
+          <img src="assets/images/slides/slide-code.svg" alt="Coding slideshow graphic">
+          <div class="slide-caption"><strong>Build Projects</strong><br>Use static files that work smoothly on GitHub Pages.</div>
+        </article>
+        <article class="slide">
+          <img src="assets/images/slides/slide-community.svg" alt="Community slideshow graphic">
+          <div class="slide-caption"><strong>Grow Together</strong><br>Add photos, videos, course notes and updates.</div>
+        </article>
+        <div class="slider-controls">
+          <button class="slide-prev" type="button" aria-label="Previous slide">‹</button>
+          <button class="slide-next" type="button" aria-label="Next slide">›</button>
+        </div>
+        <div class="dots" aria-label="Slide dots">
+          <button class="dot active" type="button" aria-label="Slide 1"></button>
+          <button class="dot" type="button" aria-label="Slide 2"></button>
+          <button class="dot" type="button" aria-label="Slide 3"></button>
+        </div>
+      </div>
     </section>
 
-    <section class="card-grid">
-      <article class="card">
-        <h2>Root Page</h2>
-        <p>
-          This <code>index.html</code> is placed in the root folder. It does not need
-          <code>window.PP_BASE_PATH</code>.
-        </p>
-      </article>
-
-      <article class="card">
-        <h2>Common Layout</h2>
-        <p>
-          Header and footer are included by JavaScript, so you can reuse the same
-          layout across many static pages.
-        </p>
-      </article>
-
-      <article class="card">
-        <h2>GitHub Pages Friendly</h2>
-        <p>
-          This uses only static HTML, CSS, and JavaScript. No server-side includes
-          are required.
-        </p>
-      </article>
+    <section class="section grid-3">
+      <div class="feature"><div class="feature-icon">📁</div><h2>Organized Assets</h2><p>CSS, JavaScript, images, slides, gallery images and videos are separated into clean folders.</p></div>
+      <div class="feature"><div class="feature-icon">🧩</div><h2>Reusable Layout</h2><p>Change the header or footer once and all pages update automatically.</p></div>
+      <div class="feature"><div class="feature-icon">🖼️</div><h2>Gallery Ready</h2><p>Includes a mixed gallery, picture gallery, video gallery, and lightbox support.</p></div>
     </section>
   </main>
-
   <div id="site-footer"></div>
-
-  <script src="include.js?v=1.0.0"></script>
+  <script src="assets/js/include.js"></script>
+  <script src="assets/js/main.js"></script>
 </body>
 </html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subfolder Page Example</title>
+  <meta name="description" content="Subfolder page example using PP_BASE_PATH for shared header and footer on GitHub Pages.">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+  <script>window.PP_BASE_PATH = "../../";</script>
+  <div id="site-header"></div>
+  <main id="main-content" class="container">
+    <section class="page-hero">
+      <p class="eyebrow">Subfolder Example</p>
+      <h1>This page is inside pages/sample/</h1>
+      <p class="lead">Because this file is two folders deep, it sets <strong>window.PP_BASE_PATH = "../../"</strong> before loading the include script.</p>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+  <script src="../../assets/js/include.js"></script>
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>

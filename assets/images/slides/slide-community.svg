@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="Grow Together">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffe2a3"/><stop offset="1" stop-color="#fff8e8"/></linearGradient></defs>
+  <rect width="1200" height="800" fill="url(#g)"/>
+  <circle cx="980" cy="120" r="180" fill="rgba(255,255,255,.45)"/>
+  <circle cx="170" cy="690" r="220" fill="rgba(255,255,255,.35)"/>
+  <rect x="115" y="130" width="970" height="540" rx="52" fill="rgba(255,255,255,.66)" stroke="#ffffff" stroke-width="8"/>
+  <path d="M190 530 C350 350, 460 640, 620 435 S900 350, 1010 515" fill="none" stroke="#7c4700" stroke-width="24" stroke-linecap="round"/>
+  <rect x="210" y="210" width="250" height="54" rx="18" fill="#7c4700" opacity=".92"/>
+  <rect x="210" y="296" width="390" height="32" rx="12" fill="#7c4700" opacity=".58"/>
+  <rect x="210" y="350" width="320" height="32" rx="12" fill="#7c4700" opacity=".38"/>
+  <text x="210" y="455" font-size="74" font-family="Arial, Helvetica, sans-serif" font-weight="900" fill="#7c4700">Grow Together</text>
+  <text x="214" y="520" font-size="34" font-family="Arial, Helvetica, sans-serif" fill="#3b2a0b">Classes, galleries, videos and updates</text>
+</svg>
