@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Programmers Picnic | GitHub Pages Template</title>
-  <meta name="description" content="GitHub Pages website template using shared header.html and footer.html loaded with JavaScript, including slideshow and gallery pages.">
-  <meta property="og:title" content="Programmers Picnic GitHub Pages Template">
-  <meta property="og:description" content="A static website template with shared includes, galleries, videos and organized assets.">
+  <title>Programmers Picnic | Layout System Template</title>
+  <meta name="description" content="GitHub Pages template using header/footer includes and layouts.js driven pages.">
+  <meta property="og:title" content="Programmers Picnic | Layout System Template">
+  <meta property="og:description" content="GitHub Pages template using header/footer includes and layouts.js driven pages.">
   <meta property="og:image" content="assets/images/og/og-home.svg">
   <meta property="og:type" content="website">
   <link rel="stylesheet" href="assets/css/style.css">
@@ -14,50 +14,10 @@
 </head>
 <body>
   <div id="site-header"></div>
-  <main id="main-content" class="container">
-    <section class="hero">
-      <div class="hero-card">
-        <p class="eyebrow">GitHub Pages Ready</p>
-        <h1>One header, one footer, many beautiful pages.</h1>
-        <p class="lead">This template keeps repeated layout in <strong>partials/header.html</strong> and <strong>partials/footer.html</strong>. Every page loads them through <strong>assets/js/include.js</strong>.</p>
-        <div class="actions">
-          <a class="btn primary" href="about.html">Explore Template</a>
-          <a class="btn secondary" href="gallery.html">View Gallery</a>
-        </div>
-      </div>
-      <div class="hero-slider" aria-label="Featured slideshow">
-        <article class="slide active">
-          <img src="assets/images/slides/slide-learning.svg" alt="Learning slideshow graphic">
-          <div class="slide-caption"><strong>Learn with Joy</strong><br>Build lessons, landing pages and course websites.</div>
-        </article>
-        <article class="slide">
-          <img src="assets/images/slides/slide-code.svg" alt="Coding slideshow graphic">
-          <div class="slide-caption"><strong>Build Projects</strong><br>Use static files that work smoothly on GitHub Pages.</div>
-        </article>
-        <article class="slide">
-          <img src="assets/images/slides/slide-community.svg" alt="Community slideshow graphic">
-          <div class="slide-caption"><strong>Grow Together</strong><br>Add photos, videos, course notes and updates.</div>
-        </article>
-        <div class="slider-controls">
-          <button class="slide-prev" type="button" aria-label="Previous slide">‹</button>
-          <button class="slide-next" type="button" aria-label="Next slide">›</button>
-        </div>
-        <div class="dots" aria-label="Slide dots">
-          <button class="dot active" type="button" aria-label="Slide 1"></button>
-          <button class="dot" type="button" aria-label="Slide 2"></button>
-          <button class="dot" type="button" aria-label="Slide 3"></button>
-        </div>
-      </div>
-    </section>
-
-    <section class="section grid-3">
-      <div class="feature"><div class="feature-icon">📁</div><h2>Organized Assets</h2><p>CSS, JavaScript, images, slides, gallery images and videos are separated into clean folders.</p></div>
-      <div class="feature"><div class="feature-icon">🧩</div><h2>Reusable Layout</h2><p>Change the header or footer once and all pages update automatically.</p></div>
-      <div class="feature"><div class="feature-icon">🖼️</div><h2>Gallery Ready</h2><p>Includes a mixed gallery, picture gallery, video gallery, and lightbox support.</p></div>
-    </section>
-  </main>
+  <main id="main-content" class="container" data-layout="home"></main>
   <div id="site-footer"></div>
   <script src="assets/js/include.js"></script>
+  <script src="assets/js/layouts.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>

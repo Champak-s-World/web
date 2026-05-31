@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Subfolder Page Example</title>
-  <meta name="description" content="Subfolder page example using PP_BASE_PATH for shared header and footer on GitHub Pages.">
+  <title>Sample Subfolder Page | Programmers Picnic Template</title>
+  <meta name="description" content="Subfolder page using PP_BASE_PATH and layouts.js.">
+  <meta property="og:title" content="Sample Subfolder Page | Programmers Picnic Template">
+  <meta property="og:description" content="Subfolder page using PP_BASE_PATH and layouts.js.">
+  <meta property="og:image" content="../../assets/images/og/og-home.svg">
+  <meta property="og:type" content="website">
   <link rel="stylesheet" href="../../assets/css/style.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494&host=ca-host-pub-1556223355139109" crossorigin="anonymous"></script>
 </head>
 <body>
-  <script>window.PP_BASE_PATH = "../../";</script>
   <div id="site-header"></div>
-  <main id="main-content" class="container">
-    <section class="page-hero">
-      <p class="eyebrow">Subfolder Example</p>
-      <h1>This page is inside pages/sample/</h1>
-      <p class="lead">Because this file is two folders deep, it sets <strong>window.PP_BASE_PATH = "../../"</strong> before loading the include script.</p>
-    </section>
-  </main>
+  <main id="main-content" class="container" data-layout="sample"></main>
   <div id="site-footer"></div>
+  <script>window.PP_BASE_PATH = "../../";</script>
   <script src="../../assets/js/include.js"></script>
+  <script src="../../assets/js/layouts.js"></script>
   <script src="../../assets/js/main.js"></script>
 </body>
 </html>
