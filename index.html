@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Programmers Picnic Template</title>
+
+  <meta name="description" content="GitHub Pages ready reusable HTML template with header and footer loaded using JavaScript." />
+  <meta name="keywords" content="HTML template, JavaScript include, GitHub Pages, header footer, Programmers Picnic" />
+  <meta name="author" content="Programmers Picnic AI-ML Classes by Champak Roy" />
+
+  <meta property="og:title" content="Programmers Picnic Template" />
+  <meta property="og:description" content="Reusable GitHub Pages template with common header and footer." />
+  <meta property="og:type" content="website" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="site-header"></div>
+
+  <main class="page-wrap">
+    <section class="hero">
+      <p class="eyebrow">GitHub Pages Template</p>
+      <h1>Reusable Header and Footer</h1>
+      <p>
+        This page loads <code>header.html</code> and <code>footer.html</code>
+        through <code>include.js</code>. Edit those two files once, and every page using
+        this layout will update.
+      </p>
+      <a class="btn" href="lessons/python/">Open subfolder example</a>
+    </section>
+
+    <section class="card-grid">
+      <article class="card">
+        <h2>Root Page</h2>
+        <p>
+          This <code>index.html</code> is placed in the root folder. It does not need
+          <code>window.PP_BASE_PATH</code>.
+        </p>
+      </article>
+
+      <article class="card">
+        <h2>Common Layout</h2>
+        <p>
+          Header and footer are included by JavaScript, so you can reuse the same
+          layout across many static pages.
+        </p>
+      </article>
+
+      <article class="card">
+        <h2>GitHub Pages Friendly</h2>
+        <p>
+          This uses only static HTML, CSS, and JavaScript. No server-side includes
+          are required.
+        </p>
+      </article>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="include.js?v=1.0.0"></script>
+</body>
+</html>
