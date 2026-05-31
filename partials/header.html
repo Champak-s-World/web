@@ -1,63 +1,58 @@
-<header class="site-header">
-  <a class="skip-link" href="#main-content">Skip to content</a>
-  <div class="container nav-wrap">
-    <a class="brand" href="index.html" data-root-link>
-      <span class="brand-mark">PP</span>
-      <span>
-        <strong>Programmers Picnic</strong>
-        <small>AI-ML Classes by Champak Roy</small>
-      </span>
+<header class="site-header" id="top">
+  <div class="top-strip">
+    <div class="container top-strip-inner">
+      <span>Premium static website template for service, learning, retail, and local business pages.</span>
+      <a class="top-whatsapp" href="https://wa.me/919335874326" target="_blank" rel="noopener">WhatsApp: +91 93358 74326</a>
+    </div>
+  </div>
+
+  <div class="container header-inner">
+    <a class="brand" href="index.html" aria-label="BluePro Template Home">
+      <span class="brand-mark">BP</span>
+      <span class="brand-text"><strong>BluePro</strong><small>Business Template</small></span>
     </a>
 
-    <div class="header-tools">
-      <form class="nav-search" role="search" action="gallery.html" data-root-action>
-        <label class="sr-only" for="pp-site-search">Search this site</label>
-        <input id="pp-site-search" name="q" type="search" placeholder="Search pages..." autocomplete="off">
-        <button type="submit" aria-label="Search">⌕</button>
-        <div class="search-results" id="pp-search-results" aria-live="polite"></div>
-      </form>
+    <button class="mobile-menu-btn" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
 
-      <button class="theme-toggle" type="button" aria-label="Switch dark or light theme" title="Dark / Light">☀️</button>
-
-      <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-
-    <nav class="site-nav" aria-label="Main navigation">
-      <ul class="nav-menu">
-        <li><a href="index.html" data-root-link>Home</a></li>
+    <nav class="main-nav" aria-label="Main navigation">
+      <ul class="nav-list">
+        <li><a href="index.html">Home</a></li>
         <li class="has-dropdown">
-          <a href="about.html" data-root-link>About</a>
+          <button class="nav-trigger" type="button" aria-expanded="false">Company <span>▾</span></button>
           <ul class="dropdown-menu">
-            <li><a href="about.html#story" data-root-link>Our Story</a></li>
-            <li><a href="about.html#method" data-root-link>Teaching Method</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="openmap.html">Open Map</a></li>
           </ul>
         </li>
         <li class="has-dropdown">
-          <a href="gallery.html" data-root-link>Gallery</a>
+          <button class="nav-trigger" type="button" aria-expanded="false">Media <span>▾</span></button>
           <ul class="dropdown-menu">
-            <li><a href="picture-gallery.html" data-root-link>Picture Gallery</a></li>
-            <li><a href="video-gallery.html" data-root-link>Video Gallery</a></li>
-            <li><a href="carousel.html" data-root-link>Carousel Page</a></li>
+            <li><a href="gallery.html">Gallery Hub</a></li>
+            <li><a href="picture-gallery.html">Picture Gallery</a></li>
+            <li><a href="video-gallery.html">Video Gallery</a></li>
+            <li><a href="carousel.html">Carousel Page</a></li>
           </ul>
         </li>
         <li class="has-dropdown">
-          <a href="shopping-cart.html" data-root-link>Shop</a>
+          <button class="nav-trigger" type="button" aria-expanded="false">Commerce <span>▾</span></button>
           <ul class="dropdown-menu">
-            <li><a href="shopping-cart.html" data-root-link>Shopping Cart</a></li>
-            <li><a href="checkout.html" data-root-link>Checkout</a></li>
-          </ul>
-        </li>
-        <li class="has-dropdown">
-          <a href="contact.html" data-root-link>Contact</a>
-          <ul class="dropdown-menu">
-            <li><a href="contact.html" data-root-link>Contact Form</a></li>
-            <li><a href="openmap.html" data-root-link>Open Map</a></li>
-            <li><a href="https://wa.me/919335874326" target="_blank" rel="noopener">WhatsApp</a></li>
+            <li><a href="shopping-cart.html">Shopping Cart</a></li>
+            <li><a href="checkout.html">Checkout</a></li>
           </ul>
         </li>
       </ul>
     </nav>
+
+    <form class="nav-search" role="search">
+      <input id="site-search" type="search" placeholder="Search pages..." autocomplete="off" />
+      <button type="submit" aria-label="Search">⌕</button>
+      <div class="search-results" id="search-results" aria-live="polite"></div>
+    </form>
+
+    <div class="theme-tools" aria-label="Theme controls">
+      <button class="theme-btn" type="button" data-theme-set="light">Light</button>
+      <button class="theme-btn" type="button" data-theme-set="dark">Dark</button>
+    </div>
   </div>
 </header>

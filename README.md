@@ -1,64 +1,40 @@
-# Programmers Picnic GitHub Pages Full Template
+# BluePro GitHub Pages Business Template
 
-This static template is ready for GitHub Pages.
+A professional blue themed static website template with shared `header.html` and `footer.html`, JavaScript includes, a `layouts.js` layout system, galleries, carousel, map, cart, checkout, dummy payment gateway, footer chatbot, WhatsApp CTA, and dark/light theme selector.
 
-## Main features
+## Pages included
 
-- `partials/header.html` loaded by JavaScript
-- `partials/footer.html` loaded by JavaScript
-- `assets/js/layouts.js` generates different page layouts
-- Two-level dropdown navigation
-- Navigation search box
-- Dark/light theme selector in the header
-- Footer chatbot demo
-- WhatsApp link: `https://wa.me/919335874326`
-- Carousel page
-- Open map page
-- Picture gallery and video gallery
-- Shopping cart and checkout demo using `localStorage`
-- Subfolder support using `window.PP_BASE_PATH`
+- `index.html`
+- `about.html`
+- `gallery.html`
+- `picture-gallery.html`
+- `video-gallery.html`
+- `carousel.html`
+- `openmap.html`
+- `contact.html`
+- `cotact.html` for typo compatibility
+- `shopping-cart.html`
+- `checkout.html`
+- `pages/sample/index.html`
 
-## Important files
+## Main editable files
 
-```text
-partials/header.html
-partials/footer.html
-assets/css/style.css
-assets/js/include.js
-assets/js/layouts.js
-assets/js/main.js
-```
-
-## Pages
-
-```text
-index.html
-about.html
-gallery.html
-picture-gallery.html
-video-gallery.html
-carousel.html
-openmap.html
-contact.html
-cotact.html
-shopping-cart.html
-checkout.html
-pages/sample/index.html
-```
-
-## How to add a page
-
-1. Copy any root HTML page.
-2. Change `data-layout="home"` to your new layout name.
-3. Add that layout in `assets/js/layouts.js`.
-4. Add a navigation link in `partials/header.html` if needed.
+- `partials/header.html` — navigation, search, theme selector
+- `partials/footer.html` — footer, chatbot, social links, WhatsApp
+- `assets/js/layouts.js` — page content and products
+- `assets/js/main.js` — dropdowns, search, theme, cart, magnifier, checkout, payment demo, chatbot
+- `assets/css/style.css` — professional blue theme
 
 ## GitHub Pages
 
-Upload these files to a GitHub repository and enable GitHub Pages from the repository settings.
+Upload the folder contents to your repository and enable GitHub Pages. Because the project uses `fetch()` to include partials, test it through GitHub Pages or a local server:
 
+```bash
+python -m http.server 8000
+```
 
-## Latest update
+Then open `http://localhost:8000`.
 
-- Dropdown navigation has been stabilized with a hover bridge, delayed closing, keyboard focus support, and Escape-to-close behavior.
-- Footer now includes social media links. Replace the `#` placeholders for Facebook, Instagram, and LinkedIn with your real URLs.
+## Cart and payment
+
+The cart uses browser `localStorage`. The payment gateway is a dummy modal for demonstration. Replace it with Razorpay, Stripe, PayPal, Cashfree, or your preferred provider when going live.

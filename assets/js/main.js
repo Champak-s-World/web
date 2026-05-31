@@ -1,274 +1,48 @@
-function initSlideshow(selector) {
-  const sliders = [...document.querySelectorAll(selector)];
-  sliders.forEach((root) => {
-    if (root.dataset.ready === "true") return;
-    root.dataset.ready = "true";
-
-    const slides = [...root.querySelectorAll(".slide")];
-    const dots = [...root.querySelectorAll(".dot")];
-    const previous = root.querySelector(".slide-prev");
-    const next = root.querySelector(".slide-next");
-    if (!slides.length) return;
-
-    let index = 0;
-    let timer;
-
-    function show(newIndex) {
-      index = (newIndex + slides.length) % slides.length;
-      slides.forEach((slide, i) => slide.classList.toggle("active", i === index));
-      dots.forEach((dot, i) => dot.classList.toggle("active", i === index));
-    }
-
-    function start() { stop(); timer = setInterval(() => show(index + 1), 4500); }
-    function stop() { if (timer) clearInterval(timer); }
-
-    previous?.addEventListener("click", () => { show(index - 1); start(); });
-    next?.addEventListener("click", () => { show(index + 1); start(); });
-    dots.forEach((dot, i) => dot.addEventListener("click", () => { show(i); start(); }));
-    root.addEventListener("mouseenter", stop);
-    root.addEventListener("mouseleave", start);
-
-    show(0);
-    start();
-  });
-}
-
-function initLightbox() {
-  const galleryLinks = [...document.querySelectorAll("[data-lightbox]")];
-  if (!galleryLinks.length) return;
-
-  let lightbox = document.querySelector(".lightbox");
-  if (!lightbox) {
-    lightbox = document.createElement("div");
-    lightbox.className = "lightbox";
-    lightbox.innerHTML = `<button class="lightbox-close" type="button" aria-label="Close image">×</button><img alt="Expanded gallery image"><p></p>`;
-    document.body.appendChild(lightbox);
-  }
-
-  const img = lightbox.querySelector("img");
-  const caption = lightbox.querySelector("p");
-  const close = lightbox.querySelector("button");
-
-  galleryLinks.forEach((link) => {
-    if (link.dataset.lightboxReady === "true") return;
-    link.dataset.lightboxReady = "true";
-    link.addEventListener("click", (event) => {
-      event.preventDefault();
-      img.src = link.getAttribute("href");
-      img.alt = link.querySelector("img")?.getAttribute("alt") || "Gallery image";
-      caption.textContent = img.alt;
-      lightbox.classList.add("open");
+(function(){
+  const base = () => window.PP_BASE_PATH || '';
+  const pages = [
+    ['Home','index.html','Professional blue business landing page'],['About','about.html','Company about services story'],['Gallery','gallery.html','Gallery media business images'],['Picture Gallery','picture-gallery.html','Photos portfolio pictures'],['Video Gallery','video-gallery.html','Videos demos testimonials'],['Carousel','carousel.html','Slideshow carousel banners'],['Map','openmap.html','Location directions map'],['Contact','contact.html','Inquiry WhatsApp contact form'],['Shopping Cart','shopping-cart.html','Cart products photos magnifier'],['Checkout','checkout.html','Payment gateway order checkout']
+  ];
+  const money = n => `₹${Number(n||0).toLocaleString('en-IN')}`;
+  const getProducts = () => window.PP_PRODUCTS || [];
+  const getCart = () => JSON.parse(localStorage.getItem('pp_cart') || '{}');
+  const setCart = c => { localStorage.setItem('pp_cart', JSON.stringify(c)); updateCartCount(); };
+  function toast(msg){ let t=document.querySelector('.toast'); if(!t){t=document.createElement('div');t.className='toast';document.body.appendChild(t)} t.textContent=msg;t.classList.add('is-visible');setTimeout(()=>t.classList.remove('is-visible'),2200); }
+  function updateCartCount(){ const count=Object.values(getCart()).reduce((a,b)=>a+Number(b||0),0); document.querySelectorAll('[data-cart-count]').forEach(el=>el.textContent=count); }
+  function addToCart(id, qty=1){ const c=getCart(); c[id]=(c[id]||0)+qty; setCart(c); toast('Added to cart'); }
+  function cartLines(){ const cart=getCart(); return getProducts().filter(p=>cart[p.id]).map(p=>({...p, qty:cart[p.id], line:p.price*cart[p.id]})); }
+  function totals(){ const subtotal=cartLines().reduce((s,p)=>s+p.line,0); const discount=Math.round(subtotal*.10); const tax=Math.round((subtotal-discount)*.18); const total=subtotal-discount+tax; return {subtotal,discount,tax,total}; }
+  function initHeader(){
+    const header=document.querySelector('.site-header'); if(!header) return;
+    const mobileBtn=header.querySelector('.mobile-menu-btn'); const nav=header.querySelector('.main-nav');
+    if(mobileBtn && nav){ mobileBtn.addEventListener('click',()=>{ const open=nav.classList.toggle('is-open'); mobileBtn.setAttribute('aria-expanded', open?'true':'false'); }); }
+    header.querySelectorAll('.has-dropdown').forEach(item=>{
+      let timer; const trigger=item.querySelector('.nav-trigger');
+      const open=()=>{clearTimeout(timer); item.classList.add('is-open'); trigger?.setAttribute('aria-expanded','true')};
+      const close=()=>{timer=setTimeout(()=>{item.classList.remove('is-open'); trigger?.setAttribute('aria-expanded','false')},220)};
+      item.addEventListener('mouseenter',open); item.addEventListener('mouseleave',close); item.addEventListener('focusin',open); item.addEventListener('focusout',close);
+      trigger?.addEventListener('click',(e)=>{ if(innerWidth<=980){ e.preventDefault(); item.classList.toggle('is-open'); }});
     });
-  });
-
-  function hide() { lightbox.classList.remove("open"); }
-  if (!lightbox.dataset.closeReady) {
-    lightbox.dataset.closeReady = "true";
-    close.addEventListener("click", hide);
-    lightbox.addEventListener("click", (event) => { if (event.target === lightbox) hide(); });
-    document.addEventListener("keydown", (event) => { if (event.key === "Escape") hide(); });
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape') document.querySelectorAll('.has-dropdown.is-open').forEach(x=>x.classList.remove('is-open')); });
+    const input=header.querySelector('#site-search'); const results=header.querySelector('#search-results'); const form=header.querySelector('.nav-search');
+    const renderSearch=()=>{ const q=(input.value||'').toLowerCase().trim(); if(!q){results.classList.remove('is-visible');results.innerHTML='';return} const found=pages.filter(p=>(p.join(' ').toLowerCase().includes(q))).slice(0,6); results.innerHTML=found.length?found.map(p=>`<a href="${base()}${p[1]}"><strong>${p[0]}</strong><br><small>${p[2]}</small></a>`).join(''):'<p class="notice">No page found.</p>'; results.classList.add('is-visible'); };
+    input?.addEventListener('input',renderSearch); form?.addEventListener('submit',e=>{e.preventDefault(); const first=results.querySelector('a'); if(first) location.href=first.href;}); document.addEventListener('click',e=>{ if(!form?.contains(e.target)) results?.classList.remove('is-visible'); });
+    header.querySelectorAll('[data-theme-set]').forEach(btn=>btn.addEventListener('click',()=>setTheme(btn.dataset.themeSet)));
+    updateThemeButtons();
   }
-}
-
-function initThemeSelector() {
-  const btn = document.querySelector(".theme-toggle");
-  const saved = localStorage.getItem("pp-theme") || "light";
-  document.documentElement.dataset.theme = saved;
-  if (btn) btn.textContent = saved === "dark" ? "🌙" : "☀️";
-  if (!btn || btn.dataset.ready) return;
-  btn.dataset.ready = "true";
-  btn.addEventListener("click", () => {
-    const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-    document.documentElement.dataset.theme = next;
-    localStorage.setItem("pp-theme", next);
-    btn.textContent = next === "dark" ? "🌙" : "☀️";
-  });
-}
-
-
-function initStableDropdownNav() {
-  const nav = document.querySelector(".site-nav");
-  const toggle = document.querySelector(".nav-toggle");
-  const dropdowns = [...document.querySelectorAll(".has-dropdown")];
-
-  if (toggle && nav && !toggle.dataset.ready) {
-    toggle.dataset.ready = "true";
-    toggle.addEventListener("click", () => {
-      const isOpen = nav.classList.toggle("open");
-      toggle.setAttribute("aria-expanded", String(isOpen));
-    });
-  }
-
-  dropdowns.forEach((item) => {
-    if (item.dataset.dropdownReady === "true") return;
-    item.dataset.dropdownReady = "true";
-    let closeTimer;
-
-    const open = () => {
-      clearTimeout(closeTimer);
-      dropdowns.forEach((other) => {
-        if (other !== item) other.classList.remove("dropdown-open");
-      });
-      item.classList.add("dropdown-open");
-    };
-
-    const close = () => {
-      clearTimeout(closeTimer);
-      closeTimer = setTimeout(() => item.classList.remove("dropdown-open"), 260);
-    };
-
-    item.addEventListener("mouseenter", open);
-    item.addEventListener("mouseleave", close);
-    item.addEventListener("focusin", open);
-    item.addEventListener("focusout", close);
-  });
-
-  if (!document.documentElement.dataset.dropdownOutsideReady) {
-    document.documentElement.dataset.dropdownOutsideReady = "true";
-    document.addEventListener("click", (event) => {
-      if (!event.target.closest(".has-dropdown")) {
-        document.querySelectorAll(".has-dropdown.dropdown-open").forEach((item) => item.classList.remove("dropdown-open"));
-      }
-    });
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        document.querySelectorAll(".has-dropdown.dropdown-open").forEach((item) => item.classList.remove("dropdown-open"));
-      }
-    });
-  }
-}
-
-function initNavSearch() {
-  const form = document.querySelector(".nav-search");
-  const input = document.getElementById("pp-site-search");
-  const box = document.getElementById("pp-search-results");
-  if (!form || !input || !box || form.dataset.ready) return;
-  form.dataset.ready = "true";
-
-  const pages = window.PP_SEARCH_INDEX || [];
-  const base = window.PP_BASE_PATH || "";
-  const addBase = (url) => /^(https?:)?\/\//.test(url) ? url : `${base}${url}`;
-
-  function render() {
-    const q = input.value.trim().toLowerCase();
-    if (!q) { box.classList.remove("open"); box.innerHTML = ""; return; }
-    const hits = pages.filter(p => `${p.title} ${p.text} ${p.tags || ""}`.toLowerCase().includes(q)).slice(0, 6);
-    box.innerHTML = hits.length
-      ? hits.map(p => `<a href="${addBase(p.url)}"><strong>${p.title}</strong><span>${p.text}</span></a>`).join("")
-      : `<p>No match found.</p>`;
-    box.classList.add("open");
-  }
-
-  input.addEventListener("input", render);
-  input.addEventListener("focus", render);
-  document.addEventListener("click", (event) => { if (!form.contains(event.target)) box.classList.remove("open"); });
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const first = box.querySelector("a");
-    if (first) location.href = first.href;
-  });
-}
-
-function initCart() {
-  const buttons = [...document.querySelectorAll("[data-add-cart]")];
-  const list = document.getElementById("cart-items");
-  const total = document.getElementById("cart-total");
-  if (!buttons.length && !list) return;
-
-  const read = () => JSON.parse(localStorage.getItem("pp-cart") || "[]");
-  const write = (cart) => localStorage.setItem("pp-cart", JSON.stringify(cart));
-  const money = (n) => `₹${Number(n).toLocaleString("en-IN")}`;
-
-  function draw() {
-    const cart = read();
-    if (list) {
-      if (!cart.length) list.innerHTML = `<p>Your cart is empty. Add a course or template pack.</p>`;
-      else list.innerHTML = cart.map((item, i) => `<div class="cart-row"><span><strong>${item.title}</strong><small>${money(item.price)}</small></span><button data-remove-cart="${i}" type="button">Remove</button></div>`).join("");
-    }
-    if (total) total.textContent = money(cart.reduce((sum, item) => sum + Number(item.price || 0), 0));
-  }
-
-  buttons.forEach(btn => {
-    if (btn.dataset.ready) return;
-    btn.dataset.ready = "true";
-    btn.addEventListener("click", () => {
-      const cart = read();
-      cart.push({ title: btn.dataset.title, price: Number(btn.dataset.price || 0) });
-      write(cart);
-      draw();
-      btn.textContent = "Added";
-      setTimeout(() => btn.textContent = "Add to Cart", 900);
-    });
-  });
-
-  document.addEventListener("click", (event) => {
-    const remove = event.target.closest("[data-remove-cart]");
-    if (!remove) return;
-    const cart = read();
-    cart.splice(Number(remove.dataset.removeCart), 1);
-    write(cart);
-    draw();
-  });
-
-  draw();
-}
-
-function initCheckoutForm() {
-  const form = document.getElementById("checkout-form");
-  if (!form || form.dataset.ready) return;
-  form.dataset.ready = "true";
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    alert("Demo checkout submitted. Connect this form to your real payment/order system.");
-  });
-}
-
-function initChatbot() {
-  const root = document.getElementById("footer-chatbot");
-  if (!root || root.dataset.ready) return;
-  root.dataset.ready = "true";
-  const toggle = root.querySelector(".chatbot-toggle");
-  const close = root.querySelector(".chatbot-close");
-  const panel = root.querySelector(".chatbot-panel");
-  const form = root.querySelector(".chatbot-form");
-  const input = root.querySelector("#chatbot-input");
-  const messages = root.querySelector("#chatbot-messages");
-
-  function open() { panel.classList.add("open"); toggle.setAttribute("aria-expanded", "true"); input?.focus(); }
-  function hide() { panel.classList.remove("open"); toggle.setAttribute("aria-expanded", "false"); }
-  function answer(q) {
-    const text = q.toLowerCase();
-    if (text.includes("whatsapp")) return `Use the WhatsApp button or open https://wa.me/919335874326`;
-    if (text.includes("cart") || text.includes("checkout")) return `Open Shop → Shopping Cart or Shop → Checkout from the navigation.`;
-    if (text.includes("map") || text.includes("location")) return `Open Contact → Open Map to see the embedded map section.`;
-    if (text.includes("gallery") || text.includes("photo")) return `Open Gallery → Picture Gallery or Gallery → Carousel Page.`;
-    if (text.includes("theme") || text.includes("dark")) return `Use the sun/moon button in the header to switch theme.`;
-    return `This is a static demo bot. You can edit its answers inside assets/js/main.js.`;
-  }
-
-  toggle?.addEventListener("click", () => panel.classList.contains("open") ? hide() : open());
-  close?.addEventListener("click", hide);
-  form?.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const q = input.value.trim();
-    if (!q) return;
-    messages.insertAdjacentHTML("beforeend", `<p class="user-msg">${q.replace(/[<>]/g, "")}</p><p class="bot-msg">${answer(q)}</p>`);
-    input.value = "";
-    messages.scrollTop = messages.scrollHeight;
-  });
-}
-
-function initPageFeatures() {
-  initSlideshow(".hero-slider, .wide-carousel");
-  initLightbox();
-  initThemeSelector();
-  initStableDropdownNav();
-  initNavSearch();
-  initCart();
-  initCheckoutForm();
-  initChatbot();
-}
-
-document.addEventListener("DOMContentLoaded", initPageFeatures);
-document.addEventListener("pp:layout-ready", initPageFeatures);
-document.addEventListener("pp:includes-ready", initPageFeatures);
+  function setTheme(theme){ document.documentElement.dataset.theme=theme; localStorage.setItem('pp_theme',theme); updateThemeButtons(); }
+  function initTheme(){ const theme=localStorage.getItem('pp_theme') || 'light'; document.documentElement.dataset.theme=theme; updateThemeButtons(); }
+  function updateThemeButtons(){ const theme=document.documentElement.dataset.theme || 'light'; document.querySelectorAll('[data-theme-set]').forEach(btn=>btn.classList.toggle('is-active',btn.dataset.themeSet===theme)); }
+  function initBot(){ const form=document.getElementById('bot-form'); if(!form) return; const input=document.getElementById('bot-input'); const box=document.getElementById('bot-messages'); const reply=(q)=>{q=q.toLowerCase(); if(q.includes('price')||q.includes('cost'))return 'You can show packages on the shop page and edit prices in layouts.js.'; if(q.includes('cart')||q.includes('checkout')||q.includes('payment'))return 'The cart, checkout, and dummy payment gateway are already included.'; if(q.includes('contact')||q.includes('whatsapp'))return 'Use WhatsApp: +91 93358 74326 or the Contact page.'; if(q.includes('gallery')||q.includes('photo')||q.includes('video'))return 'Use the Gallery, Picture Gallery, Video Gallery, and Carousel pages.'; return 'This is a demo site bot. Replace its answers in assets/js/main.js for your business.';}; form.addEventListener('submit',e=>{e.preventDefault(); const q=input.value.trim(); if(!q)return; box.insertAdjacentHTML('beforeend',`<p><strong>You:</strong> ${q}</p><p><strong>Bot:</strong> ${reply(q)}</p>`); input.value=''; box.scrollTop=box.scrollHeight;}); }
+  function initCarousel(){ document.querySelectorAll('[data-carousel]').forEach(car=>{ const slides=[...car.querySelectorAll('.slide')]; let i=0; const thumbs=document.querySelector('[data-carousel-thumbs]'); function show(n){i=(n+slides.length)%slides.length; slides.forEach((s,k)=>s.classList.toggle('is-active',k===i)); if(thumbs) thumbs.querySelectorAll('button').forEach((b,k)=>b.classList.toggle('is-active',k===i));} car.querySelector('[data-carousel-prev]')?.addEventListener('click',()=>show(i-1)); car.querySelector('[data-carousel-next]')?.addEventListener('click',()=>show(i+1)); if(thumbs){ thumbs.innerHTML=slides.map((s,k)=>`<button type="button"><img src="${s.querySelector('img')?.src}" alt="Slide ${k+1}"></button>`).join(''); thumbs.querySelectorAll('button').forEach((b,k)=>b.addEventListener('click',()=>show(k))); } show(0); setInterval(()=>show(i+1),5500); }); }
+  function initProducts(){ document.addEventListener('click',e=>{ const btn=e.target.closest('[data-add-cart]'); if(btn) addToCart(btn.dataset.addCart); const demo=e.target.closest('[data-load-demo-cart]'); if(demo){ const c={}; getProducts().forEach((p,i)=>c[p.id]=i<3?1:0); setCart(c); renderCart(); toast('Demo cart loaded'); } }); }
+  function renderCart(){ const items=document.getElementById('cart-items'), sum=document.getElementById('cart-summary'); if(!items||!sum)return; const lines=cartLines(); if(!lines.length){items.innerHTML='<div class="empty-state"><h2>Your cart is empty.</h2><p>Add demo items to see the cart design.</p><button class="primary-btn" data-load-demo-cart>Load Demo Cart</button></div>'; sum.innerHTML='<h2>Summary</h2><p>No items yet.</p>';return;} items.innerHTML=lines.map(p=>`<article class="cart-item" data-cart-row="${p.id}"><div class="cart-thumb-wrap"><img class="cart-thumb" src="${base()}${p.image}" alt="${p.name}" data-magnify><span class="magnifier-lens"></span></div><div><h3>${p.name}</h3><p>${p.desc}</p><div class="qty-control"><button data-qty="-1">−</button><input value="${p.qty}" readonly><button data-qty="1">+</button><button class="small-btn" data-remove>Remove</button></div></div><strong class="cart-item-total">${money(p.line)}</strong></article>`).join(''); const t=totals(); sum.innerHTML=`<h2>Order Summary</h2><div class="summary-row"><span>Subtotal</span><strong>${money(t.subtotal)}</strong></div><div class="summary-row"><span>Demo discount</span><strong>- ${money(t.discount)}</strong></div><div class="summary-row"><span>GST demo</span><strong>${money(t.tax)}</strong></div><div class="summary-row summary-total"><span>Total</span><strong>${money(t.total)}</strong></div><a class="primary-btn" href="checkout.html">Proceed to Checkout</a>`; initMagnifier(); }
+  function initCartEvents(){ document.addEventListener('click',e=>{ const row=e.target.closest('[data-cart-row]'); if(!row)return; const id=row.dataset.cartRow; const c=getCart(); if(e.target.matches('[data-qty]')){ c[id]=Math.max(1,(c[id]||1)+Number(e.target.dataset.qty)); setCart(c); renderCart(); } if(e.target.matches('[data-remove]')){ delete c[id]; setCart(c); renderCart(); } }); }
+  function initMagnifier(){ document.querySelectorAll('[data-magnify]').forEach(image=>{ const wrap=image.closest('.cart-thumb-wrap'); const lens=wrap.querySelector('.magnifier-lens'); function move(e){ const r=image.getBoundingClientRect(); const x=(e.clientX-r.left)/r.width*100; const y=(e.clientY-r.top)/r.height*100; lens.style.display='block'; lens.style.left=`calc(${x}% - 38px)`; lens.style.top=`calc(${y}% - 38px)`; lens.style.backgroundImage=`url(${image.src})`; lens.style.backgroundSize='320% 320%'; lens.style.backgroundPosition=`${x}% ${y}%`; } image.addEventListener('mousemove',move); image.addEventListener('mouseenter',move); image.addEventListener('mouseleave',()=>lens.style.display='none'); }); }
+  function renderCheckout(){ const el=document.getElementById('checkout-summary'); if(!el)return; const lines=cartLines(); const t=totals(); if(!lines.length){ el.innerHTML='<p class="notice">Cart is empty. Demo total shown as ₹0.</p>'; return; } el.innerHTML=lines.map(p=>`<div class="summary-row"><span>${p.name} × ${p.qty}</span><strong>${money(p.line)}</strong></div>`).join('')+`<div class="summary-row"><span>Discount</span><strong>- ${money(t.discount)}</strong></div><div class="summary-row"><span>Tax</span><strong>${money(t.tax)}</strong></div><div class="summary-row summary-total"><span>Total</span><strong>${money(t.total)}</strong></div>`; }
+  function initPayment(){ const btn=document.getElementById('pay-now'); if(!btn)return; btn.addEventListener('click',()=>{ const form=document.getElementById('checkout-form'); if(form && !form.reportValidity())return; let modal=document.querySelector('.modal-backdrop'); if(!modal){modal=document.createElement('div');modal.className='modal-backdrop';document.body.appendChild(modal)} modal.innerHTML=`<div class="payment-modal"><h2>BluePay Dummy Gateway</h2><p>Secure demo transaction in progress. No real payment is being made.</p><div class="progress-track"><div class="progress-bar"></div></div><p id="pay-status">Connecting to demo gateway...</p></div>`; modal.classList.add('is-visible'); const bar=modal.querySelector('.progress-bar'), status=modal.querySelector('#pay-status'); let steps=[['40%','Verifying customer details...'],['72%','Authorising demo payment...'],['100%','Payment successful.']]; let i=0; const timer=setInterval(()=>{ const [w,s]=steps[i++]; bar.style.width=w; status.textContent=s; if(i>=steps.length){clearInterval(timer); setTimeout(()=>{ modal.querySelector('.payment-modal').innerHTML=`<div class="success-badge">✓</div><h2 style="text-align:center">Order Placed Successfully</h2><p style="text-align:center">This was a dummy payment success screen. Connect a real gateway later.</p><div style="text-align:center"><button class="primary-btn" id="close-pay-modal">Close</button></div>`; localStorage.removeItem('pp_cart'); updateCartCount(); modal.querySelector('#close-pay-modal').addEventListener('click',()=>modal.classList.remove('is-visible'));},600);} },700); }); }
+  function initForms(){ document.addEventListener('submit',e=>{ if(e.target.id==='contact-form'){e.preventDefault(); toast('Demo inquiry received. Connect your backend or Formspree later.');} }); }
+  document.addEventListener('pp:partials-ready',()=>{initTheme();initHeader();initBot();updateCartCount();});
+  document.addEventListener('pp:layout-ready',()=>{initCarousel();initProducts();renderCart();initCartEvents();renderCheckout();initPayment();initForms();updateCartCount();});
+  initTheme();
+})();
